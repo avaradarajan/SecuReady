@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+
+  "name": "Password Reuse",
+  "description": "Detection of Password Reuse",
+  "version": "1.0",
+  "icons": {
+    "128": "icon128.png",
+    "48": "icon48.png",
+    "16": "icon167.png"
+  },
+
+  "browser_action": {
+    "default_icon": "icon167.png",
+    "default_popup": "notification.html"
+  },
+  "background": {
+    "scripts": ["event.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://my.mskcc.org/*"],
+      "js": ["jquery-3.3.1.min.js","contentscript.js"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "notifications",
+    "tabs",
+    "https://my.mskcc.org/*"
+  ]
+}
