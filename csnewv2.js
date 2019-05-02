@@ -65,34 +65,46 @@ function getFormDetails(userName,password,event) {
   console.log(passwordElement)
   console.log(pageType)
   var resp = null
-  chrome.runtime.sendMessage({todo : "checkLogic", un:userNameElement.value, pswd:passwordElement.value, url:document.domain, pt:pageType},
-  function(response) {
-  resp = response.result
-    console.log(response.result);
-    if(response.result==0)
-    {
-        passwordElement.value = ""
-        storeVal = false
-        swal({
-            title: "Uh Oh!!",
-            text: "You are already using this password for another website. Please use a different password!!",
-            icon: "warning",
-        });
+  if(pageType == "signup")
+  {
+    chrome.runtime.sendMessage({todo : "checkLogic", un:userNameElement.value, pswd:passwordElement.value, url:document.domain, pt:pageType},
+    function(response) {
+     resp = response.result
+     console.log(response.result);
+     if(response.result==0)
+     {
+         passwordElement.value = ""
+         storeVal = false
+         swal({
+             title: "Uh Oh!!",
+             text: "You are already using this password for another website. Please use a different password!!",
+             icon: "warning",
+         });
+     }
+     else
+     {
+         storeVal = true
+     }
     }
-    else
-    {
-        storeVal = true
+    )
+  }
+  else if(pageType=="login")
+  {
+    chrome.runtime.sendMessage({todo : "checkLogictwo", un:userNameElement.value, pswd:passwordElement.value, url:document.domain, pt:pageType},
+    function(response) {
+     resp = response.result
+     console.log(response.result);
+     if(response.result==0)
+     {
+         passwordElement.value = ""
+         storeVal = false
+         swal({
+             title: "Uh Oh!!",
+             text: "You have entered the password of another website. Please provide the correct password!!",
+             icon: "warning",
+         });
+     }
     }
-   }
    )
+  }
 }
-
-chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
-  if (msg.action == 'warn') {
-  swal({
-    title: "Uh oh!!",
-    text: " Looks like you are already using the password for some other site. Please use a different password everytime!",
-    icon: "warning",
-  });
-  }//if
-});
