@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script>
+        function validate(){
+            if(document.getElementById("un").value == "h"){
+                console.log("here")
+                return true;}
+            else{
+                console.log("false")
+                return false;}
+        }
+    </script>
+</head>
+<body>
+<form method="POST" onsubmit="validate()">
+  <div>
+  Username/Email:<br>
+      <input type="text" id="un" name="sorry"></div><div>
+    Password:<br>
+  <input type="password" name="lastname"></div>
+  <br><div>Submit<br>
+  <input type="submit" value="Submit" ></div>
+</form>
+</body>
+</html>
