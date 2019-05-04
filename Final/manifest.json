@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Password Reuse - Final Version",
+  "name": "Password Reuse - v2",
   "description": "Detection of Password Reuse",
-  "version": "3.0",
+  "version": "2.0",
   "icons": {
     "128": "icon128.png",
     "48": "icon48.png",
@@ -14,7 +14,7 @@
     "default_icon": "icon167.png"
   },
   "background": {
-    "scripts": ["crypto-js.js","jsencrypt.min.js","enc-base64-min.js","core.js","pbkdf2.js","background.js","sweetalert.min.js"],
+    "scripts": ["papaparse.min.js","crypto-js.js","jsencrypt.min.js","enc-base64-min.js","core.js","pbkdf2.js","background.js","sweetalert.min.js"],
     "persistent": true
   },
   "content_scripts": [
