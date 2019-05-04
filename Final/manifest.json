@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+
+  "name": "Password Reuse - Final Version",
+  "description": "Detection of Password Reuse",
+  "version": "3.0",
+  "icons": {
+    "128": "icon128.png",
+    "48": "icon48.png",
+    "16": "icon167.png"
+  },
+
+  "browser_action": {
+    "default_icon": "icon167.png"
+  },
+  "background": {
+    "scripts": ["crypto-js.js","jsencrypt.min.js","enc-base64-min.js","core.js","pbkdf2.js","background.js","sweetalert.min.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "matches": ["https://*/*","http://*/*"],
+      "js": ["crypto-js.js","jsencrypt.min.js","enc-base64-min.js","core.js","pbkdf2.js","jquery-3.3.1.min.js","sweetalert.min.js","csnewv2.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "notifications",
+    "tabs",
+    "<all_urls>"
+  ]
+}
