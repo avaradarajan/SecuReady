@@ -7,142 +7,155 @@ var hashedPassword = null
 var lStorage = window.localStorage
 var salt = null
 
+//Use case 3 check for different type of click events
 $('a').contextmenu(function(e) {
-  console.log("Url clicked")
   var link = $(this).attr("href")
   e.preventDefault();
   /* extract domain and do modifications according to DB */
 
   console.log(link)
-  var hostname = (new URL(link)).hostname;
-  console.log(hostname)
+  if(link.includes("www."))
+  {
+      var hostname = (new URL(link)).hostname;
+      console.log(hostname)
 
-  /* if hostname contains www, remove it */
+      /* if hostname contains www, remove it */
 
-  var searchItem = hostname.replace("www.", "")
-  console.log("Search item is")
-  console.log(searchItem)
-  chrome.runtime.sendMessage({todo : "searchDB", val : searchItem},
-    function (response) {
-      console.log(response.return)
-      if(response.return=="null"){
+      var searchItem = hostname.replace("www.", "")
+      console.log("Search item is")
+      console.log(searchItem)
+      chrome.runtime.sendMessage({todo : "searchDB", val : searchItem},
+        function (response) {
+          console.log(response.return)
+          if(response.return=="null"){
 
 
-      console.log("in if cs")
+          console.log("in if cs")
 
-      console.log("not allowed")
-      swal({
-        title:"Are you sure you want to do this?",
-        text:"We recommend not to proceed.......",
-        icon: "warning",
-        buttons:{
-          OK:true,
-          always: {
-            text:"Always for this site",
-            value:"always",
-          },
-          cancel:"Cancel",
-        },
-      })
-      .then((value) => {
-        switch(value) {
-          case "OK":
-          //console.log("OK")
-          window.open(link);
-          break;
+          console.log("not allowed")
+          swal({
+            title:"Are you sure you want to do proceed?",
+            text:"We recommend not to proceed for security reasons",
+            icon: "warning",
+            buttons:{
+              Proceed:true,
+              always: {
+                text:"Always for this site",
+                value:"always",
+              },
+              cancel:"Cancel",
+            },
+          })
+          .then((value) => {
+            switch(value) {
+              case "Proceed":
+              //console.log("OK")
+              window.open(link);
+              break;
 
-          case "always":
-          //console.log("always")
-          chrome.runtime.sendMessage({todo : "remember", val : searchItem})
-          window.open(link);
-          break;
+              case "always":
+              //console.log("always")
+              chrome.runtime.sendMessage({todo : "remember", val : searchItem})
+              window.open(link);
+              break;
 
-          default:
-          //console.log("cancel")
+              default:
+              //console.log("cancel")
+            }
+          });
         }
-      });
-    }
-    else if(response.return=="proceed")
-    {
-      // alert("in else in contextmenu")
-      // window.location.href = link
-      //$(link).contextmenu();
-    }
-    })
-
+        else if(response.return=="proceed")
+        {
+        }
+        })
+  }
+  else
+  {
+    window.location.href = link
+  }
 });
 
 $('a').click(function(e) {
   console.log("Url clicked")
   var link = $(this).attr("href")
+  if(link=="" || link=='#'){
+  }
+  else{
   e.preventDefault();
 
   /* extract domain and do modifications according to DB */
 
   console.log(link)
-  var hostname = (new URL(link)).hostname;
-  console.log(hostname)
+  if(link.includes("www."))
+  {
+      var hostname = (new URL(link)).hostname;
+      console.log(hostname)
 
-  /* if hostname contains www, remove it */
+      /* if hostname contains www, remove it */
 
-  var searchItem = hostname.replace("www.", "")
-  console.log("Search item is")
-  console.log(searchItem)
-  chrome.runtime.sendMessage({todo : "searchDB", val : searchItem},
-    function (response) {
-      console.log(response.return)
-      if(response.return=="null"){
-      console.log("in if cs")
+      var searchItem = hostname.replace("www.", "")
+      console.log("Search item is")
+      console.log(searchItem)
+      chrome.runtime.sendMessage({todo : "searchDB", val : searchItem},
+        function (response) {
+          console.log(response.return)
+          if(response.return=="null"){
+          console.log("in if cs")
 
-      console.log("not allowed")
-      swal({
-        title:"Are you sure you want to do this?",
-        text:"We recommend not to proceed.......",
-        icon: "warning",
-        buttons:{
-          OK:true,
-          always: {
-            text:"Always for this site",
-            value:"always",
-          },
-          cancel:"Cancel",
-        },
-      })
-      .then((value) => {
-        switch(value) {
-          case "OK":
-          //console.log("OK")
-          if(e.ctrlKey){
-            window.open(link);
-            break;
-          }
-          window.location.href = link
-          break;
+          console.log("not allowed")
+          swal({
+            title:"Are you sure you want to do proceed?",
+            text:"We recommend not to proceed for security reasons",
+            icon: "warning",
+            buttons:{
+              Proceed:true,
+              always: {
+                text:"Always for this site",
+                value:"always",
+              },
+              cancel:"Cancel",
+            },
+          })
+          .then((value) => {
+            switch(value) {
+              case "Proceed":
+              //console.log("OK")
+              if(e.ctrlKey){
+                window.open(link);
+                break;
+              }
+              window.location.href = link
+              break;
 
-          case "always":
-          //console.log("always")
-          if(e.ctrlKey){
-            chrome.runtime.sendMessage({todo : "remember", val : searchItem})
-            window.open(link);
-            break;
-          }
-          chrome.runtime.sendMessage({todo : "remember", val : searchItem})
-          window.location.href = link
-          break;
+              case "always":
+              //console.log("always")
+              if(e.ctrlKey){
+                chrome.runtime.sendMessage({todo : "remember", val : searchItem})
+                window.open(link);
+                break;
+              }
+              chrome.runtime.sendMessage({todo : "remember", val : searchItem})
+              window.location.href = link
+              break;
 
-          default:
-          //console.log("cancel")
+              default:
+              //console.log("cancel")
+            }
+          });
         }
-      });
-    }
-    else if(response.return=="proceed")
-    {
-      console.log("in else")
-      window.location.href = link
-    }
-    })
-
+        else if(response.return=="proceed")
+        {
+          window.location.href = link
+        }
+      })
+  }
+  else
+  {
+    window.location.href = link
+  }
+}
 });
+
 $(function() {
 domainName = document.domain //get current domain name
 
@@ -176,6 +189,7 @@ function storeCredentials(userName,password,page,event)
 }
 //Function that gets invoked after user enters the password and field goes out of focus
 function getFormDetails(userName,password,event) {
+  var buttonToAddListenerTo = null
   textContent = `Form Submitted! Time stamp: ${event.timeStamp}`;
   //Getting form dynamically based on the form he is currently working/typing with
   activeForm = event.srcElement.closest('form')
@@ -184,15 +198,52 @@ function getFormDetails(userName,password,event) {
   if(activeForm)
   {
             var passwordField = activeForm.querySelectorAll("input[type='password']")
-            //var submitButton = activeForm.querySelector("*[type='submit']")
+            var submitButton = activeForm.querySelector("input[type='submit']")
+            var buttonType = activeForm.querySelector("button")
+            var pageTypeIdentified = false
+            if(submitButton!=null)
+            {
+                var checkText = submitButton.innerHTML.toLowerCase()
+                console.log(checkText)
+                if(checkText.includes("sign up") || checkText.includes("register") || checkText.includes("signup") || checkText.includes("create account"))
+                {
+                    pageType = "signup"
+                    pageTypeIdentified = true
+                }
+                else if(checkText.includes("sign in") || checkText.includes("signin") || checkText.includes("log in") || checkText.includes("login"))
+                {
+                    pageType = "login"
+                    pageTypeIdentified = true
+                }
+                console.log("Submit present"+pageType)
+
+            }
+            else if(buttonType!=null)
+            {
+                buttonToAddListenerTo = buttonType
+                var checkText = buttonType.innerHTML.toLowerCase()
+                if(checkText.includes("sign up") || checkText.includes("register") || checkText.includes("signup") || checkText.includes("create account"))
+                {
+                    pageType = "signup"
+                    pageTypeIdentified = true
+                }
+                else if(checkText.includes("sign in") || checkText.includes("signin") || checkText.includes("log in") || checkText.includes("login"))
+                {
+                    pageType = "login"
+                    pageTypeIdentified = true
+                }
+                console.log(buttonType.innerHTML)
+                console.log("Submit button"+pageType)
+            }
             var allInputFieldsInActiveForm = activeForm.querySelectorAll("input:not([type='hidden']):not([aria-hidden='true'])")
             if(passwordField.length>0)
             {
-                if(passwordField.length==1 && allInputFieldsInActiveForm.length<=3)
+                console.log("PT"+pageTypeIdentified)
+                if(passwordField.length==1 && allInputFieldsInActiveForm.length<=3 && !pageTypeIdentified)
                 {
                     pageType = "login"
                 }
-                else if(passwordField.length>=1 || allInputFieldsInActiveForm.length>3)
+                else if((passwordField.length>=1 || allInputFieldsInActiveForm.length>3) && !pageTypeIdentified)
                 {
                     pageType = "signup"
                 }
@@ -210,6 +261,10 @@ function getFormDetails(userName,password,event) {
 
   //Adding a submit event to the submit button of the form to store credentials in our password manager
   activeForm.addEventListener('submit', storeCredentials.bind(this,userNameElement,passwordElement,pageType));
+  if(buttonToAddListenerTo!=null)
+  {
+    buttonToAddListenerTo.addEventListener('click', storeCredentials.bind(this,userNameElement,passwordElement,pageType));
+  }
   console.log(userNameElement)
   console.log(passwordElement)
   console.log(pageType)
@@ -229,7 +284,7 @@ function getFormDetails(userName,password,event) {
          storeVal = false
          swal({
              title: "Uh Oh!!",
-             text: "You are already using this password for another website. Please use a unique password!!",
+             text: "The entered password is already in use!!! For security reasons please enter a new password!!",
              icon: "warning",
          });
      }
