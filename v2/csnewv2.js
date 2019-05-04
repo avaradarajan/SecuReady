@@ -4,9 +4,13 @@ var userNameElement = null
 var passwordElement = null
 var storeVal = false
 $(function() {
+//  debugger;
+  // swal("Are you sure you want to do this?", {
+  //   buttons: ["Oh noez!", "Aww yiss!"],
+  // });
 domainName = document.domain
 //var key128Bits = CryptoJS.PBKDF2("Secret", "123", { keySize: 128/32 });
-console.log(key128Bits)
+//console.log(key128Bits)
 var allForms = document.querySelectorAll("form")
 var formsWithPasswordField = null
 for(i=0;i<allForms.length;i++)
@@ -19,7 +23,72 @@ for(i=0;i<allForms.length;i++)
     }
 
 }
-})
+
+});
+$('a').click(function(e) {
+  console.log("Url clicked")
+  var link = $(this).attr("href")
+  e.preventDefault();
+
+  /* extract domain and do modifications according to DB */
+
+  console.log(link)
+  var hostname = (new URL(link)).hostname;
+  console.log(hostname)
+
+  /* if hostname contains www, remove it */
+
+  var searchItem = hostname.replace("www.", "")
+  console.log("Search item is")
+  console.log(searchItem)
+  chrome.runtime.sendMessage({todo : "searchDB", val : searchItem},
+    function (response) {
+      console.log(response.return)
+      if(response.return=="null"){
+      console.log("in if cs")
+
+      console.log("not allowed")
+      swal({
+        title:"Are you sure you want to do this?",
+        text:"We recommend not to proceed.......",
+        icon: "warning",
+        buttons:{
+          OK:true,
+          always: {
+            text:"Always for this site",
+            value:"always",
+          },
+          cancel:"Cancel",
+        },
+      })
+      .then((value) => {
+        switch(value) {
+          case "OK":
+          //console.log("OK")
+          window.location.href = link
+          break;
+
+          case "always":
+          //console.log("always")
+          chrome.runtime.sendMessage({todo : "remember", val : searchItem})
+          window.location.href = link
+          break;
+
+          default:
+          //console.log("cancel")
+        }
+      });
+    }
+    else if(response.return=="proceed")
+    {
+      console.log("in else")
+      window.location.href = link
+    }
+    })
+
+});
+
+
 
 function storeCredentials(userName,password,page,event)
 {

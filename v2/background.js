@@ -9,6 +9,28 @@ var lStorage = window.localStorage
 var storeVal = false
 var pageType = null
 var useCase = null
+/* store top 10k sites in db, should be one time operation only */
+chrome.runtime.onInstalled.addListener(function(details){
+
+    console.log("first install")
+
+    Papa.parse("top-10k.csv", {
+      download:true,
+      complete: function(results) {
+        for(k = 1; k < results.data.length; k++) {
+          console.log(results.data.length)
+            lStorage.setItem(results.data[k][1], "1")
+        }
+      console.log("finished loading")
+      console.log(lStorage.getItem("youtube.com"))
+      }
+    })
+});
+
+
+
+
+
 chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
 usernameValue = request.un
 passwordValue = request.pswd
@@ -88,6 +110,22 @@ else if(pageType == "login")
         console.log(useCase)
         sendResponse({result: useCase});
 }
+if(request.todo=="searchDB"){
+    console.log("in if bk")
+    console.log(request.val)
+    if(lStorage.getItem(request.val) == null) {
+      sendResponse({return:"null"})
+    }
+
+    else{
+      sendResponse({return:"proceed"})
+    }
+  }
+
+  if(request.todo=="remember"){
+    lStorage.setItem(request.val, "1")
+    sendResponse({return:"nothing"})
+  }
 
 console.log(useCase)
 return true;
