@@ -10,7 +10,7 @@ var salt = null
 //Use case 3 check for different type of click events
 $('a').contextmenu(function(e) {
   var link = $(this).attr("href")
-  e.preventDefault();
+  //e.preventDefault();
   /* extract domain and do modifications according to DB */
 
   console.log(link)
@@ -28,8 +28,7 @@ $('a').contextmenu(function(e) {
         function (response) {
           console.log(response.return)
           if(response.return=="null"){
-
-
+          window.contextmenu=null;
           console.log("in if cs")
 
           console.log("not allowed")
