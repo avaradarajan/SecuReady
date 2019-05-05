@@ -1,4 +1,5 @@
-﻿I. Overview
+I. Overview
+
 Passwords are means by which a genuine user proves that he/she is authorized to access a device/system/object in general. Using the same passwords across accounts is one of the ways to become vulnerable to an attack. If an attacker cracks the password of a single account, he could potentially gain to access to all other accounts using the same password. Consequence of such attacks leads to access to your personal information, and thus you could become the victim of identity theft. Therefore, passwords are critical to ensure privacy and security of your systems/accounts.
 Also, security researchers have argued that most users would be protected if software would stop them from visiting unpopular websites. We have addressed these concerns in our project.
 In this project, we have developed a Chrome browser-based browser extension that will encourage users avoid password reuse, prevent them from phishing attacks and generally help them browse through the web content more securely.
@@ -25,22 +26,18 @@ II. Setting up the Project
 https://github.com/avaradarajan/SecurityEnhancingBrowserExtension
 2. Unzip the folder and place it anywhere in your system.
 3. Open your chrome browser profile and enter chrome://extensions in the address bar.
-
 4. Enable the Developer mode option on the top right corner.
-5. Once you enable the developer mode, there will be options to load the extension. Choose “Load Unpacked” button as below.
- 
+5. Once you enable the developer mode, there will be options to load the extension. Choose “Load Unpacked” button.
 6. In the file explorer, choose the parent folder of the repository you just downloaded. i.e. the immediate parent folder where your manifest.json and other extension files are packed. 
 7. In our project, it is the Final folder that you have to choose and proceed.
-8. Once you load the folder, you should get the following plugin block in the page.
-
+8. Once you load the folder, you should get the plugin block in the page.
 9. Click on Details (shown above), and enable “Allow in Incognito” if you want the plugin to even work In the Incognito mode.
 10. Setup is complete. Have a secure browsing experience.
-You should be getting an icon similar to the below added to the plugins section.
-
+You should be getting an icon added to the plugins section.
 11. You can also choose to disable the plugin by clicking on the toggle highlighted below.
 
 
-Technologies/Libraries Used
+III. Technologies/Libraries Used
 
 • JavaScript / JQuery – For use cases
 • Papa Parser library – For parsing Alexa file
