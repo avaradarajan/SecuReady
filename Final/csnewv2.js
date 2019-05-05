@@ -62,6 +62,7 @@ $('a').contextmenu(function(e) {
         }
         else if(response.return=="proceed")
         {
+            window.open(link);
         }
         })
 }
@@ -75,40 +76,33 @@ else
     function (response) {
       console.log(response.return)
       if(response.return=="null"){
-      swal({
-        title:"Are you sure you want to do this?",
-        text:"We recommend not to proceed.......",
-        icon: "warning",
-        buttons:{
-          OK:true,
-          always: {
-            text:"Always for this site",
-            value:"always",
+        swal({
+          title:"Are you sure you want to do proceed?",
+          text:"We recommend not to proceed for security reasons",
+          icon: "warning",
+          buttons:{
+            Proceed:true,
+            always: {
+              text:"Always for this site",
+              value:"always",
+            },
+            cancel:"Cancel",
           },
-          cancel:"Cancel",
-        },
-      })
-      .then((value) => {
-        switch(value) {
-          case "OK":
+        })
+        .then((value) => {
+          switch(value) {
+            case "Proceed":
           //console.log("OK")
-          if(e.ctrlKey){
+
             window.open(link);
             break;
-          }
-          window.location.href = link
-          break;
 
-          case "always":
-          //console.log("always")
-          if(e.ctrlKey){
+
+            case "always":
+            //console.log("always")
             chrome.runtime.sendMessage({todo : "remember", val : searchItem})
             window.open(link);
             break;
-          }
-          chrome.runtime.sendMessage({todo : "remember", val : searchItem})
-          window.location.href = link
-          break;
 
           default:
           //console.log("cancel")
@@ -117,7 +111,7 @@ else
     }
     else if(response.return=="proceed")
     {
-      window.location.href = link
+    window.open(link);
     }
     })
 }
@@ -187,7 +181,11 @@ $('a').click(function(e) {
         }
         else if(response.return=="proceed")
         {
+          if(e.ctrlKey){
+            window.open(link);
+          }else{
           window.location.href = link
+        }
         }
       })
   }
@@ -201,22 +199,22 @@ else
     function (response) {
       console.log(response.return)
       if(response.return=="null"){
-      swal({
-        title:"Are you sure you want to do this?",
-        text:"We recommend not to proceed.......",
-        icon: "warning",
-        buttons:{
-          OK:true,
-          always: {
-            text:"Always for this site",
-            value:"always",
+        swal({
+          title:"Are you sure you want to do proceed?",
+          text:"We recommend not to proceed for security reasons",
+          icon: "warning",
+          buttons:{
+            Proceed:true,
+            always: {
+              text:"Always for this site",
+              value:"always",
+            },
+            cancel:"Cancel",
           },
-          cancel:"Cancel",
-        },
-      })
-      .then((value) => {
-        switch(value) {
-          case "OK":
+        })
+        .then((value) => {
+          switch(value) {
+            case "Proceed":
           //console.log("OK")
           if(e.ctrlKey){
             window.open(link);
@@ -243,7 +241,11 @@ else
     }
     else if(response.return=="proceed")
     {
+      if(e.ctrlKey){
+        window.open(link);
+      }else{
       window.location.href = link
+    }
     }
     })
 }
