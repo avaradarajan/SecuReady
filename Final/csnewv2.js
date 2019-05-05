@@ -14,7 +14,7 @@ $('a').contextmenu(function(e) {
   /* extract domain and do modifications according to DB */
 
   console.log(link)
-  if(link.includes("www."))
+  if(link.includes("www.") || link.includes("http://") || link.includes("https://"))
   {
       var hostname = (new URL(link)).hostname;
       console.log(hostname)
@@ -125,7 +125,7 @@ $('a').click(function(e) {
   /* extract domain and do modifications according to DB */
 
   console.log(link)
-  if(link.includes("www."))
+  if(link.includes("www.") || link.includes("http://") || link.includes("https://"))
   {
       var hostname = (new URL(link)).hostname;
       console.log(hostname)
