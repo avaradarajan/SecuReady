@@ -29,9 +29,6 @@ $('a').contextmenu(function(e) {
           console.log(response.return)
           if(response.return=="null"){
           window.contextmenu=null;
-          console.log("in if cs")
-
-          console.log("not allowed")
           swal({
             title:"Are you sure you want to do proceed?",
             text:"We recommend not to proceed for security reasons",
@@ -67,19 +64,68 @@ $('a').contextmenu(function(e) {
         {
         }
         })
-  }
-  else
-  {
-    window.location.href = link
-  }
+}
+else
+{
+//  window.location.href = link
+  var searchItem=document.domain;
+  console.log("Reached else case to get domain")
+  console.log("Domain value is "+searchItem);
+  chrome.runtime.sendMessage({todo : "searchDB", val : searchItem},
+    function (response) {
+      console.log(response.return)
+      if(response.return=="null"){
+      swal({
+        title:"Are you sure you want to do this?",
+        text:"We recommend not to proceed.......",
+        icon: "warning",
+        buttons:{
+          OK:true,
+          always: {
+            text:"Always for this site",
+            value:"always",
+          },
+          cancel:"Cancel",
+        },
+      })
+      .then((value) => {
+        switch(value) {
+          case "OK":
+          //console.log("OK")
+          if(e.ctrlKey){
+            window.open(link);
+            break;
+          }
+          window.location.href = link
+          break;
+
+          case "always":
+          //console.log("always")
+          if(e.ctrlKey){
+            chrome.runtime.sendMessage({todo : "remember", val : searchItem})
+            window.open(link);
+            break;
+          }
+          chrome.runtime.sendMessage({todo : "remember", val : searchItem})
+          window.location.href = link
+          break;
+
+          default:
+          //console.log("cancel")
+        }
+      });
+    }
+    else if(response.return=="proceed")
+    {
+      window.location.href = link
+    }
+    })
+}
 });
 
 $('a').click(function(e) {
   console.log("Url clicked")
   var link = $(this).attr("href")
-  if(link=="" || link=='#'){
-  }
-  else{
   e.preventDefault();
 
   /* extract domain and do modifications according to DB */
@@ -99,9 +145,6 @@ $('a').click(function(e) {
         function (response) {
           console.log(response.return)
           if(response.return=="null"){
-          console.log("in if cs")
-
-          console.log("not allowed")
           swal({
             title:"Are you sure you want to do proceed?",
             text:"We recommend not to proceed for security reasons",
@@ -148,10 +191,61 @@ $('a').click(function(e) {
         }
       })
   }
-  else
-  {
-    window.location.href = link
-  }
+else
+{
+//  window.location.href = link
+  var searchItem=document.domain;
+  console.log("Reached else case to get domain")
+  console.log("Domain value is "+searchItem);
+  chrome.runtime.sendMessage({todo : "searchDB", val : searchItem},
+    function (response) {
+      console.log(response.return)
+      if(response.return=="null"){
+      swal({
+        title:"Are you sure you want to do this?",
+        text:"We recommend not to proceed.......",
+        icon: "warning",
+        buttons:{
+          OK:true,
+          always: {
+            text:"Always for this site",
+            value:"always",
+          },
+          cancel:"Cancel",
+        },
+      })
+      .then((value) => {
+        switch(value) {
+          case "OK":
+          //console.log("OK")
+          if(e.ctrlKey){
+            window.open(link);
+            break;
+          }
+          window.location.href = link
+          break;
+
+          case "always":
+          //console.log("always")
+          if(e.ctrlKey){
+            chrome.runtime.sendMessage({todo : "remember", val : searchItem})
+            window.open(link);
+            break;
+          }
+          chrome.runtime.sendMessage({todo : "remember", val : searchItem})
+          window.location.href = link
+          break;
+
+          default:
+          //console.log("cancel")
+        }
+      });
+    }
+    else if(response.return=="proceed")
+    {
+      window.location.href = link
+    }
+    })
 }
 });
 
