@@ -1,4 +1,4 @@
-I. Overview
+<b>I. Overview</b>
 
 Passwords are means by which a genuine user proves that he/she is authorized to access a device/system/object in general. Using the same passwords across accounts is one of the ways to become vulnerable to an attack. If an attacker cracks the password of a single account, he could potentially gain to access to all other accounts using the same password. Consequence of such attacks leads to access to your personal information, and thus you could become the victim of identity theft. Therefore, passwords are critical to ensure privacy and security of your systems/accounts.
 Also, security researchers have argued that most users would be protected if software would stop them from visiting unpopular websites. We have addressed these concerns in our project.
@@ -20,7 +20,7 @@ When, the user clicks on a link
 Then, If the domain of the web page/site is different from the recommended list of websites, we warn the user against visiting the site and leave the choice of proceeding to the site, to the user. We have also provided the option to dismiss the warning once or forever.
 
 
-II. Setting up the Project
+<b>II. Setting up the Project</b>
 
 1. Pull the entire source code from – 
 https://github.com/avaradarajan/SecurityEnhancingBrowserExtension
@@ -37,7 +37,7 @@ You should be getting an icon added to the plugins section.
 11. You can also choose to disable the plugin by clicking on the toggle highlighted below.
 
 
-III. Technologies/Libraries Used
+<b>III. Technologies/Libraries Used</b>
 
 • JavaScript / JQuery – For use cases
 • Papa Parser library – For parsing Alexa file
